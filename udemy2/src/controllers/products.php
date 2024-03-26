@@ -1,10 +1,10 @@
 <?php
 
-class Controller{
+class Products{
     // methods inside controllers are known as actions
     public function index(){
 
-        require "model.php";
+        require "../models/product.php";
 
         $model = new Model;
 
