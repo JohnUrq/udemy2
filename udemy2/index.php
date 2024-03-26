@@ -1,13 +1,9 @@
 <?php
+    require "model.php";
 
-$dsn = "mysql:host=localhost;dbname=product_db;charset=utf8;port=3306";
+    $model = new Model;
 
-$pdo = new PDO($dsn, "product_db_user", "secret", [
-    PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]);
-$stmt = $pdo->query("select * from product");
-
-$products = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
+    $products = $model->getData();
 ?>
 
 <!DOCTYPE html>
