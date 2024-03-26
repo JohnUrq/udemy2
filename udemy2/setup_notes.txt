@@ -1,0 +1,8 @@
+course is:
+https://www.udemy.com/course/php-mvc-from-scratch/learn/lecture/40917464#overview
+
+database:
+http://localhost:8888/phpMyAdmin5/index.php?route=/sql&server=1&db=todo_oop&table=todo_lists&pos=0
+
+localhost:
+http://localhost:8888/udemy2/
