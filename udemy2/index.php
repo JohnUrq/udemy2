@@ -1,24 +1,37 @@
 <?php
 
-$action = $_GET['action'];
-$controller = $_GET['controller'];
+$path = parse_url($_SERVER["REQUEST_URI"], PHP_URL_PATH);
+
+$segments = explode("/", $path);
+
+
+
+$action = $segments[5];
+$controller = $segments[4];
 
 require "src/controllers/$controller.php";
 
-if ($controller === 'products') {
+// if ($controller === 'products') {
 
-    $controller_object = new Products;
+//     $controller_object = new Products;
 
-}   elseif ($controller === 'home') {
+// }   elseif ($controller === 'home') {
 
-    $controller_object = new Home;
-}
+//     $controller_object = new Home;
+// }
 
-if ($action === "index") {
+// replace the entire if block with:
+    $controller_object = new $controller;
 
-    $controller_object->index();
+// if ($action === "index") {
 
-} elseif ($action === "show") {
+//     $controller_object->index();
 
-    $controller_object->show();
-}
+// } elseif ($action === "show") {
+
+//     $controller_object->show();
+// }
+
+// run the action method on the controller object to replace this if block
+
+    $controller_object->$action();
