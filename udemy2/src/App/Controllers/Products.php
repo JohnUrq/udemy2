@@ -1,4 +1,5 @@
 <?php
+namespace App\Controllers;
 
 class Products{
     // methods inside controllers are known as actions
