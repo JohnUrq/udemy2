@@ -12,4 +12,9 @@ class Products{
 
         require "views/products_index.php";
     }
+
+    public function show(){
+        // will use Model class to show an individual record
+        echo "show function";
+    }
 }
