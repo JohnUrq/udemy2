@@ -6,7 +6,7 @@ class Router
 {
     private array $routes = [];
 
-    public function add(string $path, array $params): void
+    public function add(string $path, array $params = []): void
     {
         $this->routes[] = [
             "path" => $path,
@@ -16,15 +16,46 @@ class Router
 
     public function match(string $path): array|bool
     {
-        error_log("Matching path: " . $path . "\n", 3, "path_match.log");
-        $path = rtrim($path, '/'); // Trim the trailing slash if present
+        $path = urldecode($path);
+        $path = trim($path, "/");
+        
         foreach ($this->routes as $route) {
-            $routePath = rtrim($route["path"], '/'); // Also trim the trailing slash from defined routes
-            if ($routePath === $path) {
-                return $route["params"];
+        
+            $pattern = $this->getPatternFromRoutePath($route["path"]);
+           
+            if (preg_match($pattern, $path, $matches)) {
+
+                $matches = array_filter($matches, "is_string", ARRAY_FILTER_USE_KEY);
+
+                $params = array_merge($matches, $route["params"]);
+
+                return $params;
             }
         }
+
         return false;
     }
-    
+
+    private function getPatternFromRoutePath(string $route_path): string
+    {
+        $route_path = trim($route_path, "/");
+
+        $segments = explode("/", $route_path);
+
+        $segments = array_map(function(string $segment): string {
+            // Check if the segment is a placeholder for dynamic values like {userId}
+            if(preg_match("#^\{([a-zA-Z0-9_]+)\}$#", $segment, $matches)){
+                // Adjust the replacement pattern to include numbers and letters
+                return "(?<" . $matches[1] . ">[^/]*)";
+            }
+            if(preg_match("#^\{([a-zA-Z0-9_]+):(.+)\}$#", $segment, $matches)){
+                // Adjust the replacement pattern to include numbers and letters
+                return "(?<" . $matches[1] . ">" . $matches[2] . ")";
+            }
+            return $segment;
+        }, $segments);
+        
+
+        return "#^" . implode("/", $segments) . "$#iu";
+    }
 }
