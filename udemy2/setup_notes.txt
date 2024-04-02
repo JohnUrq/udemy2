@@ -9,3 +9,14 @@ http://localhost:8888/udemy2/Untitled/udemy2/
 
 Github:
 https://github.com/John-Urquhart/udemy2/tree/main
+
+
+Namespaces? How and when would we integrate these?
+
+Why is github desktop not communicating with git hub?
+
+Can we use laravel with our finished to-do app? How would you go about that?
+
+Do you use homestead or valet?
+
+
